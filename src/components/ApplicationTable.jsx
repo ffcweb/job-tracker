@@ -21,6 +21,18 @@ function ApplicationTable({
 
   const sortedApps = [...applications].sort((a, b) => {
     if (!sortConfig.key) return 0;
+
+    // Date sorting
+    if (sortConfig.key === 'date') {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      if (sortConfig.direction === 'asc') {
+        return dateA - dateB;
+      }
+      return dateB - dateA;
+    }
+
+    // Sorting for other fields like 'role', 'company', and 'status'
     if (sortConfig.direction === 'asc') {
       return a[sortConfig.key] > b[sortConfig.key] ? 1 : -1;
     }
@@ -31,10 +43,11 @@ function ApplicationTable({
 
   return (
     <div className=''>
-      <table className="table ">
+      <table className="table">
         <thead>
           <tr>
             <th onClick={() => handleSort('role')}>Role</th>
+            <th onClick={() => handleSort('company')}>Company</th>
             <th onClick={() => handleSort('status')}>Status</th>
             <th onClick={() => handleSort('date')}>Date Applied</th>
             <th>Actions</th>
@@ -44,8 +57,8 @@ function ApplicationTable({
           {sortedApps.map((app) => (
             <tr key={app.id}>
               <td>{app.role}</td>
-              {/* <td>{app.status}</td> */}
-               <td>
+              <td>{app.company}</td>
+              <td>
                 <select
                   value={app.status}
                   onChange={(e) => handleStatusChange(app.id, e.target.value)}

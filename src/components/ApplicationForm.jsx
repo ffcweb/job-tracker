@@ -36,10 +36,10 @@ function ApplicationForm({ onSubmit }) {
       <input className='m-2'
         type="text"
         name="company"
-        placeholder="Company Name"
+        placeholder="Company"
         value={formData.company}
         onChange={handleChange}
-      />
+      /> 
       <input className='m-2'
         type="date"
         name="date"
